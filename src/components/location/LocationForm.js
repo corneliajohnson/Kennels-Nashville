@@ -1,21 +1,46 @@
-import React, { useContext, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
 import { LocationContext } from "./LocationProvider";
+import { useHistory, useParams } from "react-router-dom";
 
 export const LocationForm = () => {
-  const { addLocation } = useContext(LocationContext);
+  const { getLocationById, updateLocation, addLocation } = useContext(
+    LocationContext
+  );
+
+  const [location, setLocation] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { locationId } = useParams();
   const history = useHistory();
 
-  const name = useRef(null);
-  const address = useRef(null);
+  const handleControlledInputChange = (event) => {
+    const newLocation = { ...location };
+    newLocation[event.target.name] = event.target.value;
+    setLocation(newLocation);
+  };
 
-  const constructNewLocation = () => {
-    if (name.current.value === "" || address.current.value === "") {
-      window.alert("Complete all fields");
+  useEffect(() => {
+    if (locationId) {
+      getLocationById(locationId).then((location) => {
+        setLocation(location);
+        setIsLoading(false);
+      });
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const constructLocation = () => {
+    if (locationId) {
+      updateLocation({
+        id: locationId,
+        name: location.name,
+        address: location.address,
+      }).then(() => history.push(`/locations/detail/${location.id}`));
     } else {
       addLocation({
-        name: name.current.value,
-        address: address.current.value,
+        name: location.name,
+        address: location.address,
       }).then(() => history.push("/locations"));
     }
   };
@@ -29,11 +54,13 @@ export const LocationForm = () => {
           <input
             type="text"
             id="locationName"
-            ref={name}
+            name="name"
             required
             autoFocus
             className="form-control"
             placeholder="Location name"
+            onChange={handleControlledInputChange}
+            defaultValue={location.name}
           />
         </div>
       </fieldset>
@@ -43,23 +70,27 @@ export const LocationForm = () => {
           <input
             type="text"
             id="locationAddress"
-            ref={address}
+            name="address"
             required
             autoFocus
             className="form-control"
             placeholder="Location Address"
+            onChange={handleControlledInputChange}
+            defaultValue={location.address}
           />
         </div>
       </fieldset>
       <button
         type="submit"
+        disabled={isLoading}
         onClick={(e) => {
           e.preventDefault();
-          constructNewLocation();
+          constructLocation();
         }}
         className="btn btn-primary"
       >
         Save Location
+        {locationId ? <>Save Location</> : <>Add Location</>}
       </button>
     </form>
   );

@@ -132,6 +132,12 @@ export const ApplicationViews = () => {
           </Route>
         </EmployeeProvider>
       </LocationProvider>
+
+      <LocationProvider>
+        <Route exact path="/locations/edit/:locationId(\d+)">
+          <LocationForm />
+        </Route>
+      </LocationProvider>
     </>
   );
 };

@@ -95,6 +95,7 @@ export const EmployeeForm = () => {
       </fieldset>
       <button
         type="submit"
+        disabled={isLoading}
         onClick={(e) => {
           e.preventDefault();
           constructEmployee();

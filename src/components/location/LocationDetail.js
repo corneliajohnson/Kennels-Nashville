@@ -49,6 +49,13 @@ export const LocationDetail = () => {
       >
         Delete Location
       </button>
+      <button
+        onClick={() => {
+          history.push(`/locations/edit/${location.id}`);
+        }}
+      >
+        Edit
+      </button>
     </section>
   );
 };
