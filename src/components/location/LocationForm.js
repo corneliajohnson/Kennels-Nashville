@@ -47,7 +47,9 @@ export const LocationForm = () => {
 
   return (
     <form className="locationForm">
-      <h2 className="locationForm__title">New Location</h2>
+      <h2 className="locationForm__title">
+        {locationId ? <>Edit Location</> : <>New Location</>}
+      </h2>
       <fieldset>
         <div className="form-group">
           <label htmlFor="locationName">Location name: </label>

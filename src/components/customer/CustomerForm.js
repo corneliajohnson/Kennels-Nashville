@@ -53,7 +53,9 @@ export const CustomerForm = () => {
 
   return (
     <form className="customerForm">
-      <h2 className="customerForm__title">New Customer</h2>
+      <h2 className="customerForm__title">
+        {customerId ? <>Edit Customer</> : <>New Cusomer</>}
+      </h2>
       <fieldset>
         <div className="form-group">
           <label htmlFor="customerName">Customer name: </label>
