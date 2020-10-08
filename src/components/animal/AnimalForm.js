@@ -66,6 +66,7 @@ export const AnimalForm = () => {
         //POST - add
         addAnimal({
           name: animal.name,
+          breed: animal.breed,
           locationId: parseInt(animal.locationId),
           customerId: parseInt(animal.customerId),
         }).then(() => history.push("/animals"));
