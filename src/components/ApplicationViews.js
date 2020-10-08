@@ -17,6 +17,7 @@ import { AnimalDetail } from "./animal/AnimalDetail";
 import { EmployeeDetail } from "./employee/EmployeeDetail";
 import { LocationDetail } from "./location/LocationDetail";
 import { CustomerDetail } from "./customer/CustomerDetail";
+import { AnimalSearch } from "./animal/AnimalSearch";
 
 export const ApplicationViews = () => {
   return (
@@ -29,6 +30,7 @@ export const ApplicationViews = () => {
       {/* Render the animal list when http://localhost:3000/animals */}
       <AnimalProvider>
         <Route exact path="/animals">
+          <AnimalSearch />
           <AnimalList />
         </Route>
       </AnimalProvider>
